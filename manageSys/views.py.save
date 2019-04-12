@@ -1,0 +1,67 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import windowShow
+from .sendGo import send_motion
+from .sendGo import send_stop
+from .sendGo import send_autoMot
+from .sendGo import send_emerStop
+from time import sleep
+import os
+import picamera
+camera = picamera.PiCamera()
+camera.resolution = (75, 50)
+import io
+import numpy
+
+
+	
+def home(request):
+	context = {
+		'title': 'PLATFORM: manage',
+		'showWin': windowShow.objects.all(),
+	}
+	return render(request, 'manageSys/home.html', context)
+		
+def	str2bool(v):
+	if v=='false': return False	
+	else: return True		
+	
+def manage_go(request):
+	if request.method == 'POST':
+		way = request.POST['way']
+		if way in ['up', 'down']:
+			send_motion(way)
+		else:
+			print('TURN: ', way)
+			send_autoMot(u'Turn', 10)
+	return HttpResponse()	
+	
+def manage_stop(request):
+	if request.method == 'POST':
+		send_stop(request.POST['stop'])
+	return HttpResponse()
+
+def autoMotion(request):
+	if request.method == 'POST':
+		print(request.POST)
+		send_autoMot(request.POST['what'], request.POST['val'])
+		sleep(0.25)
+		send_emerStop()
+	return HttpResponse()
+	
+def emerStop(request):
+	if request.method == 'POST':
+		send_emerStop();
+	return HttpResponse()
+
+def camera_view(request):
+	#camera.capture('camera.jpg', resize=(320, 240))
+
+	
+	#with open('camera.jpg', 'rb') as f:
+		#image = f.read()
+	image = io.BytesIO()
+	camera.capture(image, 'jpeg')
+	wrapper = io.TextIOWrapper(image, encoding='utf-8')
+        
+	return HttpResponse(image.read(), content_type='image/jpeg')

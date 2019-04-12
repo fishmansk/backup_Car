@@ -1,0 +1,29 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="ru">
+    
+	<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=470, initial-scale=1">
+		<!-- Добавить картинки       <link rel="icon" href=""> -->
+        <title>{{ title }}</title>
+		<!-- Базовый CSS -->
+		<link href="{% static 'css/style.css' %}" rel="stylesheet" >
+		<!-- Горизонтальная полоса прокрутки CSS -->
+		<link href="{% static 'css/horizontal_scroll.css' %}" rel="stylesheet">
+		{% block pageStyle %} {% endblock %}
+	</head>
+	<!--alert(event.keyCode)-->
+    <body>
+		<input class="open" id="top-box" type="checkbox" hidden>
+		<label class="btn" for="top-box"></label>
+        
+		<div class="top-panel" align = "center">
+			<a href="home"><img src = "{% static 'image/home.png' %}" class = "menu_btn" ></a>
+        </div>
+		
+		{% block content %} {% endblock %}	
+	</body>
+</html>
+

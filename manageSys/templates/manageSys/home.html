@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block pageStyle %} 
+	<!-- Index CSS -->
+        <link href="{% static 'css/indexStyle.css' %}" rel="stylesheet">
+		<script text="text/javascript" src="{% static 'jscript/jquery-3.1.1.min.js' %}" ></script>
+{% endblock %}
+
+
+{% block content %} 
+	{% csrf_token %}
+	<div>
+	</div>
+	<div class="container">
+			<!-- Кнопки управления для маленьких и средних экранов -->
+			<div class = "controlButton" id = "buttonUpPhone"></div>
+			<div class = "controlButton" id = "buttonLeftPhone"></div>
+			<div class = "controlButton" id = "buttonDownPhone"></div>
+			<div class = "controlButton" id = "buttonRightPhone"></div>			
+				
+			<div id = "control" class = "indexWindow">
+				<div class = "textWindow">
+					<span class = "textIn">Управление платформой</span>
+				</div>
+				<div class = "contentWindow">
+					<div class = "controlButton" id = "buttonUp"></div>
+					<div class = "controlButton" id = "buttonLeft"></div>
+					<div class = "controlButton" id = "buttonDown"></div>
+					<div class = "controlButton" id = "buttonRight"></div>
+					<div> 
+						<button class = "but" id = "go">Движение без остановки</button>
+						</br>
+						<button class = "but" id = "turn">Поворот без остановки</button>
+						</br>
+						<button class = "but" id = "stop">СТОП</button>
+					</div>
+				</div>
+			</div>
+			</form>
+		<!-- <img id='camera' src='http://192.168.12.1:8082/stream.mjpg' alt='Camera image' widht='640px' height='480px'>-->
+		<!-- <video id="video" src="http://192.168.12.1:8082" autoplay="autoplay" /> -->
+		<iframe src="http://192.168.12.1:8082/index.html" width="800px" height="600px"></iframe>
+
+	</div>
+		<script text="text/javascript" src="{% static 'jscript/script.js' %}" defer></script>
+	
+{% endblock %}
